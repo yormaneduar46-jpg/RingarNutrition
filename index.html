@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ringar Nutrition | Suplementos Deportivos</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon: #00f5a0;
+    --neon2: #00d9f5;
+    --orange: #ff6b2b;
+    --dark: #0a0a0f;
+    --card: #12121a;
+    --card2: #1a1a28;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --border: rgba(0,245,160,0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 64px;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 3px;
+    background: linear-gradient(90deg, var(--neon), var(--neon2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: .9rem; transition: color .2s; }
+  .nav-links a:hover { color: var(--neon); }
+  #cart-btn {
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    color: #000; border: none; border-radius: 50px;
+    padding: 8px 20px; font-weight: 700; font-size: .9rem;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  #cart-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,245,160,.4); }
+  #cart-count {
+    background: var(--orange); color: #fff;
+    border-radius: 50%; width: 20px; height: 20px;
+    font-size: .75rem; display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+  }
+
+  /* ── HERO ── */
+  #inicio {
+    min-height: 88vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 60px 5%;
+    position: relative; overflow: hidden;
+  }
+  #inicio::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(0,245,160,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 30%, rgba(0,217,245,.1) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 60% 80%, rgba(255,107,43,.08) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--neon);
+    color: var(--neon); font-size: .8rem; font-weight: 600; letter-spacing: 2px;
+    padding: 5px 16px; border-radius: 50px; margin-bottom: 24px;
+    animation: pulse-border 2s infinite;
+  }
+  @keyframes pulse-border {
+    0%,100% { box-shadow: 0 0 0 0 rgba(0,245,160,.3); }
+    50% { box-shadow: 0 0 0 8px rgba(0,245,160,0); }
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    line-height: .95; letter-spacing: 4px;
+    background: linear-gradient(135deg, #fff 30%, var(--neon) 70%, var(--neon2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+  }
+  .hero-sub {
+    color: var(--muted); font-size: 1.1rem; max-width: 520px;
+    line-height: 1.7; margin-bottom: 36px;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    color: #000; font-weight: 700; padding: 14px 32px;
+    border-radius: 50px; text-decoration: none; font-size: 1rem;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 32px rgba(0,245,160,.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,245,160,.5); }
+  .btn-outline {
+    border: 1px solid var(--border); color: var(--text);
+    padding: 14px 32px; border-radius: 50px; text-decoration: none; font-size: 1rem;
+    transition: background .2s, border-color .2s;
+  }
+  .btn-outline:hover { background: rgba(0,245,160,.07); border-color: var(--neon); }
+
+  /* ── QUIÉNES SOMOS ── */
+  #nosotros {
+    padding: 90px 5%;
+    background: linear-gradient(180deg, var(--dark) 0%, #0d0d18 100%);
+  }
+  .section-label {
+    font-size: .75rem; font-weight: 700; letter-spacing: 4px;
+    color: var(--neon); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 2px;
+    color: #fff; margin-bottom: 20px;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+    align-items: center; max-width: 1100px; margin: 0 auto;
+  }
+  .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem; letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
+  /* horario */
+  .schedule-box {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px;
+    margin-top: 40px; max-width: 1100px; margin: 40px auto 0;
+  }
+  .schedule-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 2px; color: var(--neon2);
+    margin-bottom: 20px;
+  }
+  .schedule-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 14px; }
+  .schedule-item {
+    background: var(--card);
+    border-radius: 12px; padding: 14px 18px;
+    border-left: 3px solid var(--neon);
+  }
+  .schedule-day { font-weight: 600; font-size: .9rem; }
+  .schedule-time { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
+  /* ── PRODUCTOS ── */
+  #productos { padding: 90px 5%; }
+  .products-header {
+    text-align: center; margin-bottom: 50px;
+  }
+  .filters {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 40px;
+  }
+  .filter-btn {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--muted); padding: 8px 20px; border-radius: 50px;
+    cursor: pointer; font-size: .85rem; font-weight: 500;
+    transition: all .2s; font-family: 'Outfit', sans-serif;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    color: #000; border-color: transparent;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px; max-width: 1200px; margin: 0 auto;
+  }
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+    cursor: pointer;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,245,160,.15);
+    border-color: rgba(0,245,160,.4);
+  }
+  .product-img {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative;
+  }
+  .product-img-real {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+  }
+  .product-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--orange); color: #fff;
+    font-size: .7rem; font-weight: 700; padding: 4px 10px;
+    border-radius: 50px; letter-spacing: 1px;
+  }
+  .product-body { padding: 20px; }
+  .product-category {
+    font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+    color: var(--neon); text-transform: uppercase; margin-bottom: 6px;
+  }
+  .product-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
+  .product-desc { color: var(--muted); font-size: .85rem; line-height: 1.6; margin-bottom: 16px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 1px;
+    color: var(--neon);
+  }
+  .add-btn {
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    color: #000; border: none; border-radius: 50px;
+    padding: 8px 18px; font-weight: 700; font-size: .85rem;
+    cursor: pointer; transition: transform .2s, box-shadow .2s;
+  }
+  .add-btn:hover { transform: scale(1.07); box-shadow: 0 6px 20px rgba(0,245,160,.4); }
+
+  /* ── MODAL PRODUCTO ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.8); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 24px; padding: 40px;
+    max-width: 520px; width: 100%;
+    position: relative;
+    animation: modal-in .3s ease;
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: scale(.9) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none; color: var(--muted);
+    font-size: 1.5rem; cursor: pointer; line-height: 1;
+  }
+  .modal-emoji { font-size: 5rem; text-align: center; margin-bottom: 16px; }
+  .modal-product-image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin-bottom: 8px; }
+  .modal-cat { font-size: .8rem; font-weight: 700; letter-spacing: 2px; color: var(--neon); margin-bottom: 12px; }
+  .modal-desc { color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .modal-detail-list { margin-bottom: 24px; }
+  .modal-detail-list li { color: var(--muted); font-size: .9rem; margin-bottom: 6px; padding-left: 16px; position: relative; }
+  .modal-detail-list li::before { content: '→'; position: absolute; left: 0; color: var(--neon); }
+  .modal-footer { display: flex; align-items: center; justify-content: space-between; }
+  .modal-price { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--neon); }
+  .modal-add-btn {
+    background: linear-gradient(135deg, var(--neon), var(--neon2));
+    color: #000; border: none; border-radius: 50px;
+    padding: 12px 28px; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: transform .2s;
+  }
+  .modal-add-btn:hover { transform: scale(1.05); }
+
+  /* ── CARRITO SIDEBAR ── */
+  .cart-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  }
+  .cart-overlay.open { display: block; }
+  .cart-panel {
+    position: fixed; top: 0; right: -100%; bottom: 0; z-index: 301;
+    width: min(420px, 95vw);
+    background: var(--card2);
+    border-left: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    transition: right .35s cubic-bezier(.4,0,.2,1);
+    padding: 0;
+  }
+  .cart-panel.open { right: 0; }
+  .cart-header {
+    padding: 24px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cart-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--neon), var(--neon2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .cart-close { background: none; border: none; color: var(--muted); font-size: 1.6rem; cursor: pointer; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
+  .cart-empty { text-align: center; color: var(--muted); margin-top: 60px; font-size: 3rem; }
+  .cart-empty p { font-size: 1rem; margin-top: 12px; }
+  .cart-item {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border-radius: 14px; padding: 14px;
+    margin-bottom: 12px; border: 1px solid var(--border);
+  }
+  .cart-item-emoji { font-size: 2.2rem; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; }
+  .cart-item-image {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 600; font-size: .95rem; }
+  .cart-item-price { color: var(--neon); font-weight: 700; font-size: .9rem; }
+  .qty-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .qty-btn {
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--text); width: 26px; height: 26px;
+    border-radius: 6px; cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .qty-btn:hover { background: var(--neon); color: #000; }
+  .qty-num { font-weight: 700; min-width: 20px; text-align: center; }
+  .remove-item { background: none; border: none; color: #ff4a4a; cursor: pointer; font-size: 1.2rem; }
+
+  /* descuento */
+  .discount-section { padding: 0 24px 16px; }
+  .discount-row { display: flex; gap: 8px; }
+  .discount-input {
+    flex: 1; background: var(--card); border: 1px solid var(--border);
+    color: var(--text); border-radius: 10px; padding: 10px 14px;
+    font-family: 'Outfit', sans-serif; font-size: .9rem;
+    outline: none; transition: border-color .2s;
+  }
+  .discount-input:focus { border-color: var(--neon); }
+  .discount-apply {
+    background: var(--card2); border: 1px solid var(--border);
+    color: var(--neon); border-radius: 10px; padding: 10px 16px;
+    cursor: pointer; font-weight: 700; font-size: .85rem;
+    transition: background .2s;
+  }
+  .discount-apply:hover { background: rgba(0,245,160,.1); }
+  .discount-msg { font-size: .82rem; margin-top: 8px; }
+  .discount-msg.ok { color: var(--neon); }
+  .discount-msg.err { color: #ff4a4a; }
+
+  /* totales */
+  .cart-footer { padding: 16px 24px 28px; border-top: 1px solid var(--border); }
+  .totals { margin-bottom: 16px; }
+  .total-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--muted); font-size: .9rem; }
+  .total-row.big { color: #fff; font-weight: 700; font-size: 1.1rem; }
+  .total-row span:last-child { color: var(--neon); }
+  .whatsapp-btn {
+    width: 100%; background: #25d366;
+    color: #fff; border: none; border-radius: 14px;
+    padding: 16px; font-weight: 700; font-size: 1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: transform .2s, box-shadow .2s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.4); }
+  .whatsapp-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 40px 5%;
+    border-top: 1px solid var(--border);
+    color: var(--muted); font-size: .85rem;
+  }
+  footer span { color: var(--neon); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--card2); border: 1px solid var(--neon);
+    color: var(--text); padding: 12px 24px; border-radius: 50px;
+    font-size: .9rem; font-weight: 600; z-index: 999;
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Ringar Nutrition</div>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#productos">Productos</a></li>
+  </ul>
+  <button id="cart-btn">
+    🛒 Carrito <span id="cart-count">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-badge">⚡ SUPLEMENTACIÓN ÉLITE</div>
+  <h1 class="hero-title">LLEVA TU<br>RENDIMIENTO<br>AL LÍMITE</h1>
+  <p class="hero-sub">Suplementos deportivos premium seleccionados para atletas que no se conforman con menos.</p>
+  <div class="hero-ctas">
+    <a href="#productos" class="btn-primary">Ver Productos</a>
+    <a href="#nosotros" class="btn-outline">Quiénes Somos</a>
+  </div>
+</section>
+
+<!-- QUIÉNES SOMOS -->
+<section id="nosotros">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-label">Nuestra Historia</p>
+      <h2 class="section-title">NACIÓ EN EL GYM,<br>CRECIÓ CONTIGO</h2>
+      <p>En <strong>Ringar Nutrition</strong> somos apasionados del deporte y la nutrición. Llevamos más de 5 años ayudando a atletas, principiantes y profesionales a alcanzar sus metas con los mejores suplementos del mercado.</p>
+      <p>Cada producto que ofrecemos es cuidadosamente seleccionado: verificamos su calidad, composición y resultados reales. Tu progreso es nuestra motivación.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">+500</div>
+        <div class="stat-label">Clientes satisfechos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Productos disponibles</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Calificación promedio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Envío rápido</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="schedule-box">
+    <h3>🕐 Horario de Atención</h3>
+    <div class="schedule-grid">
+      <div class="schedule-item">
+        <div class="schedule-day">Lunes – Viernes</div>
+        <div class="schedule-time">8:00 AM – 7:00 PM</div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-day">Sábado</div>
+        <div class="schedule-time">9:00 AM – 5:00 PM</div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-day">Domingo</div>
+        <div class="schedule-time">10:00 AM – 2:00 PM</div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-day">WhatsApp</div>
+        <div class="schedule-time">Disponible 24/7 🟢</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos">
+  <div class="products-header">
+    <p class="section-label">Catálogo</p>
+    <h2 class="section-title">NUESTROS PRODUCTOS</h2>
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="proteina">Proteína</button>
+    <button class="filter-btn" data-filter="creatina">Creatina</button>
+    <button class="filter-btn" data-filter="preentrenamiento">Pre-entreno</button>
+    <button class="filter-btn" data-filter="vitaminas">Vitaminas</button>
+    <button class="filter-btn" data-filter="quemador">Quemadores</button>
+  </div>
+  <div class="products-grid" id="products-grid"></div>
+</section>
+
+<!-- MODAL PRODUCTO -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div class="modal-emoji" id="modal-emoji"></div>
+    <div class="modal-cat" id="modal-cat"></div>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <p class="modal-desc" id="modal-desc"></p>
+    <ul class="modal-detail-list" id="modal-details"></ul>
+    <div class="modal-footer">
+      <div class="modal-price" id="modal-price"></div>
+      <button class="modal-add-btn" id="modal-add-btn">+ Agregar al carrito</button>
+    </div>
+  </div>
+</div>
+
+<!-- CARRITO -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-header">
+    <h2>Tu Carrito</h2>
+    <button class="cart-close" id="cart-close">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">🛒<p>Tu carrito está vacío</p></div>
+  </div>
+
+  <div class="discount-section">
+    <div class="discount-row">
+      <input class="discount-input" id="discount-input" type="text" placeholder="Código de descuento">
+      <button class="discount-apply" id="discount-apply">Aplicar</button>
+    </div>
+    <div class="discount-msg" id="discount-msg"></div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="totals">
+      <div class="total-row"><span>Subtotal</span><span id="subtotal">$0</span></div>
+      <div class="total-row"><span>Descuento</span><span id="discount-amount">-$0</span></div>
+      <div class="total-row big"><span>TOTAL</span><span id="total">$0</span></div>
+    </div>
+    <button class="whatsapp-btn" id="whatsapp-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.119.554 4.107 1.523 5.837L.057 23.535a.75.75 0 00.937.937l5.698-1.466A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.49-5.19-1.349l-.372-.214-3.852.991.991-3.852-.214-.372A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 5.477 10 10-4.477 10-10 10z"/></svg>
+      Pedir por WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Ringar Nutrition</span> | Suplementos Deportivos · Hecho con 💪 para atletas reales</p>
+</footer>
+
+<script>
+// ── CONFIGURACIÓN ──────────────────────────────────────
+const CONFIG = {
+  // 🔴 CAMBIA ESTE NÚMERO por el tuyo (con código de país, sin + ni espacios)
+  whatsappNumber: '573184960071',
+
+  // 💰 Moneda
+  currency: 'COP',
+  currencySymbol: '$',
+
+  // 🎟️ Códigos de descuento: { CODIGO: porcentaje }
+  discountCodes: {
+    'GAIN10': 10,
+    'ELITE20': 20,
+    'BIENVENIDO': 15,
+    'PROMO30': 30,
+  }
+};
+
+// ── PRODUCTOS ──────────────────────────────────────────
+const products = [
+  {
+    id: 1, name: 'Whey Protein Gold',
+    category: 'proteina', categoryLabel: 'PROTEÍNA',
+    image: 'img/whey.png', price: 180000,
+    badge: 'BESTSELLER',
+    desc: 'Proteína de suero de alta calidad con 25g por porción. Ideal para recuperación muscular post-entreno.',
+    details: ['25g de proteína por porción','Sabores: Chocolate, Vainilla, Fresa','Sin azúcar añadida','Bolsa x 2 kg – 60 porciones'],
+    gradient: 'linear-gradient(135deg,#1a1a2e,#16213e)'
+  },
+  {
+    id: 2, name: 'Creatina Monohidrato',
+    category: 'creatina', categoryLabel: 'CREATINA',
+    image: 'img/whey.png', price: 95000,
+    badge: null,
+    desc: 'Creatina pura micronizada para mayor fuerza, potencia y volumen muscular. 100% efectividad comprobada.',
+    details: ['5g de creatina pura por dosis','Micronizada para mejor absorción','Sin sabor – mezcla con cualquier bebida','300g – 60 porciones'],
+    gradient: 'linear-gradient(135deg,#0f3460,#16213e)'
+  },
+  {
+    id: 3, name: 'Pre-Entreno FURY X',
+    category: 'preentrenamiento', categoryLabel: 'PRE-ENTRENO',
+    emoji: '🔥', price: 145000,
+    badge: 'NUEVO',
+    desc: 'Explosión de energía y enfoque mental para el entrenamiento más intenso. Cafeína + Beta-Alanina + Citrulina.',
+    details: ['300mg de cafeína + Beta-Alanina','Mejora el flujo sanguíneo muscular','Sabor Sandía o Uva Azul','30 porciones por tarro'],
+    gradient: 'linear-gradient(135deg,#3d0000,#1a0a0a)'
+  },
+  {
+    id: 4, name: 'BCAA Recovery Pro',
+    category: 'proteina', categoryLabel: 'AMINOÁCIDOS',
+    emoji: '💊', price: 110000,
+    badge: null,
+    desc: 'Aminoácidos de cadena ramificada 2:1:1 para una recuperación óptima y reducción del dolor muscular.',
+    details: ['6g de BCAAs por porción (2:1:1)','Con Glutamina y Electrolitos','Sabor Tropical o Limón','250g – 40 porciones'],
+    gradient: 'linear-gradient(135deg,#003d1a,#0a1a0d)'
+  },
+  {
+    id: 5, name: 'Omega 3 + Vitamina D',
+    category: 'vitaminas', categoryLabel: 'VITAMINAS',
+    emoji: '🐟', price: 68000,
+    badge: null,
+    desc: 'Combo esencial para salud cardiovascular, articulaciones fuertes y sistema inmune óptimo.',
+    details: ['EPA 360mg + DHA 240mg por cápsula','Vitamina D3 1000 IU añadida','Cápsulas blandas de fácil digestión','90 cápsulas por frasco'],
+    gradient: 'linear-gradient(135deg,#001a3d,#0a0d1a)'
+  },
+  {
+    id: 6, name: 'Thermo Shred Elite',
+    category: 'quemador', categoryLabel: 'QUEMADOR',
+    emoji: '🌡️', price: 130000,
+    badge: 'HOT',
+    desc: 'Quemador termogénico potente que acelera el metabolismo y suprime el apetito de forma natural.',
+    details: ['Cafeína + Té Verde + L-Carnitina','Aumenta la temperatura corporal','Suprime el apetito de forma natural','60 cápsulas – 1 mes de uso'],
+    gradient: 'linear-gradient(135deg,#3d1a00,#1a0d00)'
+  },
+  {
+    id: 7, name: 'Mass Gainer 3000',
+    category: 'proteina', categoryLabel: 'GANADOR DE MASA',
+    emoji: '💪', price: 210000,
+    badge: null,
+    desc: 'Hipercalórico premium para quienes buscan ganar masa muscular rápidamente. 1250 calorías por porción.',
+    details: ['1250 kcal y 50g de proteína por porción','Carbohidratos de liberación sostenida','Enriquecido con vitaminas y minerales','Bolsa x 3 kg – 15 porciones'],
+    gradient: 'linear-gradient(135deg,#1a0a3d,#0d0a1a)'
+  },
+  {
+    id: 8, name: 'L-Carnitina Líquida',
+    category: 'quemador', categoryLabel: 'QUEMADOR',
+    emoji: '🧃', price: 85000,
+    badge: null,
+    desc: 'L-Carnitina en formato líquido para máxima absorción. Convierte la grasa en energía durante el ejercicio.',
+    details: ['2000mg de L-Carnitina por dosis','Absorción hasta 3x mayor que en cápsulas','Sabor Frambuesa','Frasco 500ml – 30 porciones'],
+    gradient: 'linear-gradient(135deg,#1a003d,#0d0015)'
+  },
+];
+
+// ── ESTADO ─────────────────────────────────────────────
+let cart = [];
+let currentDiscount = 0;
+let currentProduct = null;
+
+// ── UTILIDADES ─────────────────────────────────────────
+function fmt(n) {
+  return CONFIG.currencySymbol + n.toLocaleString('es-CO');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── RENDER PRODUCTOS ───────────────────────────────────
+function renderProducts(filter = 'all') {
+  const grid = document.getElementById('products-grid');
+  const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" data-id="${p.id}">
+      <div class="product-img" style="background:${p.gradient}">
+        ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-img-real">` : p.emoji}
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-category">${p.categoryLabel}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">${fmt(p.price)}</div>
+          <button class="add-btn" data-id="${p.id}">+ Agregar</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // click en tarjeta → modal
+  grid.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('add-btn')) return;
+      openModal(+card.dataset.id);
+    });
+  });
+  // click en botón agregar
+  grid.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      addToCart(+btn.dataset.id);
+    });
+  });
+}
+
+// ── FILTROS ────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(btn.dataset.filter);
+  });
+});
+
+// ── MODAL ──────────────────────────────────────────────
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  currentProduct = p;
+  document.getElementById('modal-emoji').innerHTML = p.image
+    ? `<img src="${p.image}" alt="${p.name}" class="modal-product-image">`
+    : p.emoji;
+  document.getElementById('modal-cat').textContent = p.categoryLabel;
+  document.getElementById('modal-title').textContent = p.name;
+  document.getElementById('modal-desc').textContent = p.desc;
+  document.getElementById('modal-price').textContent = fmt(p.price);
+  document.getElementById('modal-details').innerHTML = p.details.map(d => `<li>${d}</li>`).join('');
+  document.getElementById('modal-overlay').classList.add('open');
+}
+document.getElementById('modal-close').addEventListener('click', () => {
+  document.getElementById('modal-overlay').classList.remove('open');
+});
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+document.getElementById('modal-add-btn').addEventListener('click', () => {
+  if (currentProduct) {
+    addToCart(currentProduct.id);
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+});
+
+// ── CARRITO ────────────────────────────────────────────
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ ...p, qty: 1 });
+  updateCart();
+  showToast(`✅ ${p.name} agregado al carrito`);
+}
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCart();
+}
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(id);
+  else updateCart();
+}
+
+function updateCart() {
+  const count = cart.reduce((s, x) => s + x.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+
+  const container = document.getElementById('cart-items');
+  if (cart.length === 0) {
+    container.innerHTML = '<div class="cart-empty">🛒<p>Tu carrito está vacío</p></div>';
+  } else {
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-emoji">${item.image ? `<img src="${item.image}" alt="${item.name}" class="cart-item-image">` : item.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">${fmt(item.price)} c/u</div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          </div>
+        </div>
+        <button class="remove-item" onclick="removeFromCart(${item.id})">🗑</button>
+      </div>
+    `).join('');
+  }
+  updateTotals();
+}
+
+function updateTotals() {
+  const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
+  const discountAmt = Math.round(subtotal * currentDiscount / 100);
+  const total = subtotal - discountAmt;
+  document.getElementById('subtotal').textContent = fmt(subtotal);
+  document.getElementById('discount-amount').textContent = `-${fmt(discountAmt)}`;
+  document.getElementById('total').textContent = fmt(total);
+}
+
+// ── DESCUENTO ──────────────────────────────────────────
+document.getElementById('discount-apply').addEventListener('click', () => {
+  const code = document.getElementById('discount-input').value.trim().toUpperCase();
+  const msg = document.getElementById('discount-msg');
+  if (CONFIG.discountCodes[code] !== undefined) {
+    currentDiscount = CONFIG.discountCodes[code];
+    msg.textContent = `✅ Codigo aplicado: ${currentDiscount}% de descuento`;
+    msg.className = 'discount-msg ok';
+    updateTotals();
+  } else {
+    currentDiscount = 0;
+    msg.textContent = '❌ Codigo invalido o expirado';
+    msg.className = 'discount-msg err';
+    updateTotals();
+  }
+});
+
+// ── ABRIR / CERRAR CARRITO ─────────────────────────────
+function openCart() {
+  document.getElementById('cart-panel').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
+}
+function closeCart() {
+  document.getElementById('cart-panel').classList.remove('open');
+  document.getElementById('cart-overlay').classList.remove('open');
+}
+document.getElementById('cart-btn').addEventListener('click', openCart);
+document.getElementById('cart-close').addEventListener('click', closeCart);
+document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+// ── WHATSAPP ───────────────────────────────────────────
+document.getElementById('whatsapp-btn').addEventListener('click', () => {
+  if (cart.length === 0) {
+    showToast('⚠️ Tu carrito esta vacio');
+    return;
+  }
+  const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
+  const discountAmt = Math.round(subtotal * currentDiscount / 100);
+  const total = subtotal - discountAmt;
+
+  let msg = '*Nuevo Pedido – Ringar Nutrition*\n\n';
+  msg += '*Productos:*\n';
+  cart.forEach(item => {
+    msg += `• ${item.name} x${item.qty} = ${fmt(item.price * item.qty)}
+`;
+  });
+  msg += `\n *Subtotal:* ${fmt(subtotal)}`;
+  if (currentDiscount > 0) {
+    const code = document.getElementById('discount-input').value.trim().toUpperCase();
+    msg += `\n *Descuento (${code} - ${currentDiscount}%):* -${fmt(discountAmt)}`;
+  }
+  msg += `\n *TOTAL: ${fmt(total)}*`;
+  msg += '\n\n Por favor indicame tu direccion de entrega y metodo de pago. ¡Gracias!';
+
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+});
+
+// ── INIT ───────────────────────────────────────────────
+renderProducts();
+</script>
+</body>
+</html>
